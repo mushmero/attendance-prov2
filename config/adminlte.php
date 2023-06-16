@@ -307,6 +307,11 @@ return [
             'text' => 'search',
         ],
         [
+            'text'  =>  'people',
+            'url'   =>  'people',
+            'icon'  =>  'fas fa-fw fa-user-alt',
+        ],
+        [
             'text'  =>  'department',
             'url'   =>  'department',
             'icon'  =>  'fas fa-fw fa-building',

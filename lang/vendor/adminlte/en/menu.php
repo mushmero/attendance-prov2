@@ -18,4 +18,5 @@ return [
     'information'                   => 'Information',
     'department'                    => 'Departments',
     'units'                         => 'Units',
+    'people'                        => 'People',
 ];
