@@ -2289,16 +2289,16 @@
         },
         {
             "name": "mushmero/lapdash",
-            "version": "2.7.5",
+            "version": "2.7.6",
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/mushmero/lapdash.git",
-                "reference": "cf201fa3312af5f196401f7a0ea036cc2cc773c9"
+                "reference": "73ef7dda91fa152038c90b184e23a3f25d34c2fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/mushmero/lapdash/get/cf201fa3312af5f196401f7a0ea036cc2cc773c9.zip",
-                "reference": "cf201fa3312af5f196401f7a0ea036cc2cc773c9",
+                "url": "https://bitbucket.org/mushmero/lapdash/get/73ef7dda91fa152038c90b184e23a3f25d34c2fc.zip",
+                "reference": "73ef7dda91fa152038c90b184e23a3f25d34c2fc",
                 "shasum": ""
             },
             "require": {
@@ -2337,9 +2337,9 @@
             "description": "Laravel Admin Panel boilerplate with Permission, Roles & User Module to start building your application",
             "homepage": "https://bitbucket.org/mushmero/lapdash",
             "support": {
-                "source": "https://bitbucket.org/mushmero/lapdash/src/cf201fa3312af5f196401f7a0ea036cc2cc773c9/?at=2.7.5"
+                "source": "https://bitbucket.org/mushmero/lapdash/src/73ef7dda91fa152038c90b184e23a3f25d34c2fc/?at=2.7.6"
             },
-            "time": "2023-06-16T16:49:09+00:00"
+            "time": "2023-06-16T17:14:20+00:00"
         },
         {
             "name": "nesbot/carbon",
