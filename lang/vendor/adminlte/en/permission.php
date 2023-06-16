@@ -2,4 +2,5 @@
 
 return [    
     'department'                    => 'Departments',
+    'units'                         => 'Units',
 ];

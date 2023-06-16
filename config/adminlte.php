@@ -311,6 +311,11 @@ return [
             'url'   =>  'department',
             'icon'  =>  'fas fa-fw fa-building',
         ],
+        [
+            'text'  =>  'units',
+            'url'   =>  'units',
+            'icon'  =>  'fas fa-fw fa-building',
+        ],
         ['header'   =>  'admin_setting'],
         [
             'text'  =>  'settings',

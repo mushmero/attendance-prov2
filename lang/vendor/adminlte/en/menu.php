@@ -17,4 +17,5 @@ return [
     'warning'                       => 'Warning',
     'information'                   => 'Information',
     'department'                    => 'Departments',
+    'units'                         => 'Units',
 ];

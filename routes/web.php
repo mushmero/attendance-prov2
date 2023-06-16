@@ -39,6 +39,15 @@ Route::middleware(['web'])->group(static function () {
                         Route::get('/{id}/show', 'DepartmentsController@show')->name('department.show');
                         Route::get('/{id}/delete', 'DepartmentsController@destroy')->name('department.delete');
                     });
+                    Route::prefix('units')->group(static function(){
+                        Route::get('/', 'UnitsController@index')->name('units');
+                        Route::post('/', 'UnitsController@store')->name('units.store');
+                        Route::get('/create', 'UnitsController@create')->name('units.create');
+                        Route::get('/{id}/edit', 'UnitsController@edit')->name('units.edit');
+                        Route::put('/{id}', 'UnitsController@update')->name('units.update');
+                        Route::get('/{id}/show', 'UnitsController@show')->name('units.show');
+                        Route::get('/{id}/delete', 'UnitsController@destroy')->name('units.delete');
+                    });
                 });
             });
         });
