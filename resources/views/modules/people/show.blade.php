@@ -19,7 +19,8 @@
                 <x-adminlte-input name="country" label="Country" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ Helper::getCountryByCca2($data->country)->name }}" readonly/>
                 <x-adminlte-input name="level" label="Level" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->level->name }}" readonly/>
                 <x-adminlte-input name="department" label="Department" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->department->name }}" readonly/>
-                <x-adminlte-input name="unit" label="Unit" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->unit->name }}" readonly/>       
+                <x-adminlte-input name="unit" label="Unit" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->unit->name }}" readonly/>
+                <x-adminlte-input name="people_no" label="People No" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->people_no }}" readonly/>
                 <x-slot name="footerSlot">
                     <a href="{{ route('people') }}">
                         <x-adminlte-button class="btn-flat" label="{{ __('adminlte::adminlte.back') }}" theme="default" icon="fas fa-chevron-left"/>

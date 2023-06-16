@@ -38,6 +38,7 @@ class PeopleController extends Controller
             'Level',
             'Department',
             'Unit',
+            'ID No',
             ['label' => 'Actions', 'no-export' => true, 'width' => 5],
         ];
 
@@ -47,6 +48,7 @@ class PeopleController extends Controller
                 $arr->level->name,
                 $arr->department->name,
                 $arr->unit->name,
+                $arr->people_no,
                 '<nobr><a href="'.url('people/'.$arr->id.'/edit').'">'.$this->btnEdit.'</a><a href="'.url('people/'.$arr->id.'/delete').'">'.$this->btnDelete.'</a><a href="'.url('people/'.$arr->id.'/show').'">'.$this->btnDetails.'</a></nobr>',
             );
         }
@@ -54,7 +56,7 @@ class PeopleController extends Controller
         $config = [
             'data' => $data,
             'order' => [[0, 'asc']],
-            'columns' => [null, null, null, null, null],
+            'columns' => [null, null, null, null, null, null],
         ];
 
         return view('modules.people.list', [
@@ -140,6 +142,7 @@ class PeopleController extends Controller
             'department_id' => $data['department'],
             'unit_id' => $data['unit'],
             'user_id' => auth()->user()->id,
+            'people_no' => $this->peopleNo('MY',$data['department'],$data['unit']),
         ]);
 
         if($store){
@@ -270,5 +273,22 @@ class PeopleController extends Controller
             $this->title.' deleted successfully',
         )->success();
         return redirect()->route('units');
+    }
+
+    function getDepartment($department_id)
+    {
+        $result = Departments::where('id',$department_id)->first();
+        return $result;
+    }
+
+    function getUnit($unit_id)
+    {
+        $result = Units::where('id',$unit_id)->first();
+        return $result;
+    }
+
+    function peopleNo($initial, $department_id, $unit_id )
+    {
+        return Helper::generataPeopleNo($initial, !is_null($this->getDepartment($department_id)) ? $this->getDepartment($department_id)->tag : '', !is_null($this->getUnit($unit_id)) ? $this->getUnit($unit_id)->tag : '');
     }
 }

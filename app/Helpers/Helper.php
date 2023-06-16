@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Helpers;
+use Carbon\Carbon;
 use PragmaRX\Countries\Package\Countries;
+use Mushmero\Lapdash\Helpers\Helper as PackageHelper;
 
 class Helper {
     
@@ -84,5 +86,24 @@ class Helper {
                         return ['name' => $native];
                     });
         return (object)self::transformArray($country);
+    }
+
+    public static function generataPeopleNo($initial = '', $department_tag = '', $unit_tag = '')
+    {
+        $people_no = '';
+        if(empty($initial)) $initial = PackageHelper::generateRandomString(3,'alphaUpper');
+        if(!empty($department_tag)){
+            $people_no = $initial.Carbon::now()->format('Y').$department_tag.PackageHelper::generateRandomNumber(4);
+        }
+        if(!empty($unit_tag)){
+            $people_no = $initial.Carbon::now()->format('Y').$unit_tag.PackageHelper::generateRandomNumber(4);
+        }
+        if(!empty($department_tag) && !empty($unit_tag)){
+            $people_no = $initial.Carbon::now()->format('Y').$department_tag.'-'.$unit_tag.PackageHelper::generateRandomNumber(4);
+        }
+        if(empty($department_tag) && empty($unit_tag)){
+            $people_no = $initial.Carbon::now()->format('Y').PackageHelper::generateRandomString(4,'alphaUpper').PackageHelper::generateRandomNumber(4);
+        }
+        return $people_no;
     }
 }

@@ -27,6 +27,7 @@ class People extends Model
             'department_id',
             'unit_id',
             'user_id',
+            'people_no',
             'created_at',
             'updated_at',
         ]);
@@ -50,6 +51,7 @@ class People extends Model
         'department_id',
         'unit_id',
         'user_id',
+        'people_no',
     ];
 
     public function user()
