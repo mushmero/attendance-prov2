@@ -10,7 +10,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "mushmero/lapdash": "^2.6"
+        "mushmero/lapdash": "^2.6",
+        "pragmarx/countries": "^0.8.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
