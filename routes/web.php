@@ -57,6 +57,15 @@ Route::middleware(['web'])->group(static function () {
                         Route::get('/{id}/show', 'UnitsController@show')->name('units.show');
                         Route::get('/{id}/delete', 'UnitsController@destroy')->name('units.delete');
                     });
+                    Route::prefix('levels')->group(static function(){
+                        Route::get('/', 'LevelsController@index')->name('levels');
+                        Route::post('/', 'LevelsController@store')->name('levels.store');
+                        Route::get('/create', 'LevelsController@create')->name('levels.create');
+                        Route::get('/{id}/edit', 'LevelsController@edit')->name('levels.edit');
+                        Route::put('/{id}', 'LevelsController@update')->name('levels.update');
+                        Route::get('/{id}/show', 'LevelsController@show')->name('levels.show');
+                        Route::get('/{id}/delete', 'LevelsController@destroy')->name('levels.delete');
+                    });
                 });
             });
         });

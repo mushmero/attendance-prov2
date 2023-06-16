@@ -312,6 +312,11 @@ return [
             'icon'  =>  'fas fa-fw fa-user-alt',
         ],
         [
+            'text'  =>  'levels',
+            'url'   =>  'levels',
+            'icon'  =>  'fas fa-fw fa-tasks',
+        ],
+        [
             'text'  =>  'department',
             'url'   =>  'department',
             'icon'  =>  'fas fa-fw fa-building',
