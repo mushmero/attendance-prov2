@@ -8,7 +8,7 @@ use App\Models\Departments;
 use App\Models\People;
 use App\Models\Units;
 use Illuminate\Http\Request;
-use App\Model\Levels;
+use App\Models\Levels;
 
 class PeopleController extends Controller
 {
@@ -86,7 +86,7 @@ class PeopleController extends Controller
             "placeholder" => "Select level",
             "allowClear" => true,
         ];
-        $levels = "Levels::all()";
+        $levels = Levels::all();
 
         $configDepartment = [
             "placeholder" => "Select department",
@@ -192,7 +192,7 @@ class PeopleController extends Controller
             "placeholder" => "Select level",
             "allowClear" => true,
         ];
-        $levels = "Levels::all()";
+        $levels = Levels::all();
 
         $configDepartment = [
             "placeholder" => "Select department",

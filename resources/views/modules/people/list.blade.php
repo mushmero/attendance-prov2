@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <x-adminlte-card title="{{ $table_title }}" theme="default" icon="fas fa-sm fa-building" collapsible>
+            <x-adminlte-card title="{{ $table_title }}" theme="default" icon="fas fa-sm fa-user-alt" collapsible>
                 <x-slot name="toolsSlot">
                     <a href="{{ route('people.create') }}">
                         <x-adminlte-button class="btn-sm btn-flat" label="{{ __('adminlte::adminlte.add_new') }}" theme="success" icon="fas fa-plus"/>

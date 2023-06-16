@@ -13,7 +13,7 @@
             <form class="form" action="{{ route('people.update',$data->id) }}" method="post">
                 @method('put')
                 @csrf
-                    <x-adminlte-card title="{{ $table_title }} {{ $data->name }}" theme="default" icon="fas fa-sm fa-rocket" collapsible>
+                    <x-adminlte-card title="{{ $table_title }} {{ $data->name }}" theme="default" icon="fas fa-sm fa-user-alt" collapsible>
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <x-adminlte-input name="name" label="Full Name" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->fullname }}" required enable-old-support/>

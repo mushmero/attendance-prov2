@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <x-adminlte-card title="{{ $table_title }} " theme="default" icon="fas fa-sm fa-rocket" collapsible>
+            <x-adminlte-card title="{{ $table_title }} " theme="default" icon="fas fa-sm fa-user-alt" collapsible>
                 <x-adminlte-input name="name" label="Full Name" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->fullname }}" readonly/>
                 <x-adminlte-input name="gender" label="Gender" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->gender }}" readonly/>
                 <x-adminlte-input name="address" label="Address" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->address }}" readonly/>
