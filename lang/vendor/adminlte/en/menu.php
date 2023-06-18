@@ -21,4 +21,6 @@ return [
     'people'                        => 'People',
     'levels'                        => 'Levels',
     'attendances'                   => 'Attendances',
+    'config'                        => 'Config',
+    'app_setting'                   => 'App Setting',
 ];

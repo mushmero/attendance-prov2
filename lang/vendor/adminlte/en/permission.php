@@ -6,4 +6,5 @@ return [
     'people'                        => 'People',
     'levels'                        => 'Levels',
     'attendances'                   => 'Attendances',
+    'app_setting'                   => 'App Setting',
 ];

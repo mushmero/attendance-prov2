@@ -316,20 +316,32 @@ return [
             'url'   =>  'people',
             'icon'  =>  'fas fa-fw fa-user-alt',
         ],
+        ['config'   =>  'config'],
         [
-            'text'  =>  'levels',
-            'url'   =>  'levels',
-            'icon'  =>  'fas fa-fw fa-tasks',
-        ],
-        [
-            'text'  =>  'department',
-            'url'   =>  'department',
-            'icon'  =>  'fas fa-fw fa-building',
-        ],
-        [
-            'text'  =>  'units',
-            'url'   =>  'units',
-            'icon'  =>  'fas fa-fw fa-building',
+            'text'  =>  'config',
+            'icon'  =>  'fas fa-fw fa-tools',
+            'submenu'   => [
+                [
+                    'text'  =>  'levels',
+                    'url'   =>  'levels',
+                    'icon'  =>  'fas fa-fw fa-tasks',
+                ],
+                [
+                    'text'  =>  'department',
+                    'url'   =>  'department',
+                    'icon'  =>  'fas fa-fw fa-building',
+                ],
+                [
+                    'text'  =>  'units',
+                    'url'   =>  'units',
+                    'icon'  =>  'fas fa-fw fa-building',
+                ],
+                [
+                    'text'  =>  'app_setting',
+                    'url'   =>  'app_setting',
+                    'icon'  =>  'fas fa-fw fa-toolbox',
+                ],
+            ],
         ],
         ['header'   =>  'admin_setting'],
         [

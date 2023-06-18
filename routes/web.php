@@ -70,6 +70,15 @@ Route::middleware(['web'])->group(static function () {
                         Route::get('/{id}/show', 'LevelsController@show')->name('levels.show');
                         Route::get('/{id}/delete', 'LevelsController@destroy')->name('levels.delete');
                     });
+                    Route::prefix('app_setting')->group(static function(){
+                        Route::get('/', 'AppSettingController@index')->name('app_setting');
+                        Route::post('/', 'AppSettingController@store')->name('app_setting.store');
+                        Route::get('/create', 'AppSettingController@create')->name('app_setting.create');
+                        Route::get('/{id}/edit', 'AppSettingController@edit')->name('app_setting.edit');
+                        Route::put('/{id}', 'AppSettingController@update')->name('app_setting.update');
+                        Route::get('/{id}/show', 'AppSettingController@show')->name('app_setting.show');
+                        Route::get('/{id}/delete', 'AppSettingController@destroy')->name('app_setting.delete');
+                    });
                 });
             });
         });
