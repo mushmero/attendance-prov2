@@ -29,7 +29,7 @@ class AttendancesController extends Controller
     public function index()
     {
         $data = array();
-        $array = Attendance::where('created_at', Carbon::today())->get();
+        $array = Attendance::whereDate('created_at',Carbon::today()->toDateString())->get();
 
         $heads = [
             'Staff No',
@@ -42,8 +42,8 @@ class AttendancesController extends Controller
         foreach($array as $arr){
             $data[] = array(
                 $arr->people_no,
-                $arr->clock_in,
-                $arr->clock_out,
+                $arr->clock_in ? Carbon::parse($arr->clock_in)->format('d/m/Y h:i:s A') : '',
+                $arr->clock_out ? Carbon::parse($arr->clock_out)->format('d/m/Y h:i:s A') : '',
                 $arr->status,
                 // '<nobr><a href="'.url('departments/'.$arr->id.'/edit').'">'.$this->btnEdit.'</a><a href="'.url('departments/'.$arr->id.'/delete').'">'.$this->btnDelete.'</a><a href="'.url('departments/'.$arr->id.'/show').'">'.$this->btnDetails.'</a></nobr>',
             );

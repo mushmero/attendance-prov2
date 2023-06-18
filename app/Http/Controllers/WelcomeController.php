@@ -8,10 +8,11 @@ use Carbon\Carbon;
 use Str;
 use App\Http\Traits\PeopleTraits;
 use App\Http\Traits\AttendanceTraits;
+use App\Http\Traits\AppSettingTraits;
 
 class WelcomeController extends Controller
 {
-    use PeopleTraits, AttendanceTraits;
+    use PeopleTraits, AttendanceTraits, AppSettingTraits;
 
     protected $title;
 
@@ -58,49 +59,58 @@ class WelcomeController extends Controller
 
         if($this->peopleExist($people_no)){
             if(!empty($clock_in) && $clock_in == 'in'){
-                if($this->attendanceExist($people_no, Carbon::today(), 'clock_in')){         
+                if($this->attendanceExist($people_no, Carbon::today()->toDateString(), 'clock_in')){         
                     flash(
                         'You already clocked in.',
                     )->warning();
                 }else{
-                    Attendance::create(
-                        [
-                            'people_no' => $people_no,
-                            'clock_in' => Carbon::now()->toDateTimeString(),
-                            'status' => 'New',
-                        ]
-                    );   
-                    flash(
-                        'Clock in succesfull.',
-                    )->success();
+                    $now = Carbon::now(config('app.timezone'));
+                    $clocked_in_time = $now->toTimeString();
+                    $time_limit = $this->getValueByParameter('clock_in_time_limit')->value;
+                    if($time_limit){
+                        if($clocked_in_time < Carbon::parse($time_limit)->format('h:i:s')){
+                            $create = [
+                                'people_no' => $people_no,
+                                'clock_in' => $now->toDateTimeString(),
+                                'status' => 'Normal',
+                            ];
+                        }else{
+                            $create = [
+                                'people_no' => $people_no,
+                                'clock_in' => $now->toDateTimeString(),
+                                'status' => 'Late',
+                            ];
+                        }
+                        Attendance::create($create);
+                        flash(
+                            'Clock in succesfull.',
+                        )->success();
+                    }else{
+                        flash(
+                            'Unable to clock in. Please contact administrator',
+                        )->error();
+                    }  
                 }
-            }
-            if(!empty($clock_out) && $clock_out == 'out'){
-                if($this->attendanceExist($people_no, Carbon::today(), 'clock_out')){
-                    Attendance::where('people_no',$people_no)->update(
-                        [
-                            'clock_out' => Carbon::now()->toDateTimeString(),
-                            'status' => 'Clock Out',
-                        ]
-                    );   
+            }else if(!empty($clock_out) && $clock_out == 'out'){
+                if($this->attendanceExist($people_no, Carbon::today()->toDateString(), 'clock_out')){ 
                     flash(
-                        'Clock out succesfull.',
-                    )->success();
+                        'You already clocked out',
+                    )->warning();
                 }else{
                     Attendance::where('people_no',$people_no)->update(
                         [
-                            'clock_out' => Carbon::now()->toDateTimeString(),
-                            'status' => 'Clock Out',
+                            'clock_out' => Carbon::now(config('app.timezone'))->toDateTimeString(),
                         ]
                     );   
                     flash(
                         'Clock out succesfull.',
                     )->success();
                 }
+            }else{
+                flash(
+                    'Error! Please contact administrator',
+                )->error();
             }
-            flash(
-                'Error! Please contact administrator',
-            )->error();
         }else{
             flash(
                 'Unable to find staff. Please refer to management',
