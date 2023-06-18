@@ -48,9 +48,9 @@ class PeopleController extends Controller
         foreach($array as $arr){
             $data[] = array(
                 $arr->fullname,
-                $arr->level->name,
-                $arr->department->name,
-                $arr->unit->name,
+                $arr->level ? $arr->level->name : '',
+                $arr->department ? $arr->department->name : '',
+                $arr->unit ? $arr->unit->name : '',
                 $arr->people_no,
                 '<nobr><a href="'.url('people/'.$arr->id.'/edit').'">'.$this->btnEdit.'</a><a href="'.url('people/'.$arr->id.'/delete').'">'.$this->btnDelete.'</a><a href="'.url('people/'.$arr->id.'/show').'">'.$this->btnDetails.'</a></nobr>',
             );

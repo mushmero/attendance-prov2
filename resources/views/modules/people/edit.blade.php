@@ -16,7 +16,7 @@
                     <x-adminlte-card title="{{ $table_title }} {{ $data->name }}" theme="default" icon="fas fa-sm fa-user-alt" collapsible>
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <x-adminlte-input name="name" label="Full Name" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->fullname }}" required enable-old-support/>
+                                <x-adminlte-input name="fullname" label="Full Name" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->fullname }}" required enable-old-support/>
                                 <x-adminlte-input name="address" label="Address" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->address }}" enable-old-support/>
                                 <x-adminlte-input name="postal_code" label="Postal Code" fgroup-class="row" label-class="col-md-2 control-label" igroup-class="col-md-10" value="{{ $data->postal_code }}" enable-old-support/>
                                 <x-adminlte-select2 id="country" name="country" label="Country" fgroup-class="row" label-class="col-md-2 control-label"  igroup-class="col-md-10" igroup-size="md" :config="$configCountry" enable-old-support>
