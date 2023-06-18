@@ -12,6 +12,8 @@ $(document).ready(function() {
     });
     // remove aler on 3000ms
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+
+    setInterval(refreshTime, 1000);
 });
 
 function disabledLink()
@@ -41,4 +43,9 @@ function hideMenu(){
             }
         }
     });
+}
+
+function refreshTime() {
+    var formattedString = new moment().local('Asia/Kuala_Lumpur').format('DD/MM/YYYY hh:mm:ss A');
+    $('#time').text(formattedString);
 }
