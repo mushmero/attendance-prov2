@@ -121,7 +121,7 @@ class AppSettingController extends Controller
     {
         $data = AppSetting::where('id', $id)->firstOrFail();
 
-        return view('modules.departments.edit', [
+        return view('modules.appsetting.edit', [
             'data' => $data,
             'title' => $this->title,
             'table_title' => 'Edit '.$this->title,
@@ -165,6 +165,6 @@ class AppSettingController extends Controller
         flash(
             $this->title.' deleted successfully',
         )->success();
-        return redirect()->route('department');
+        return redirect()->route('app_setting');
     }
 }
