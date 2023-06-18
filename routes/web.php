@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('App\Http\Controllers')->group(static function () {
+    Route::get('/', 'WelcomeController@index')->name('welcome');
+    Route::post('/', 'WelcomeController@store')->name('welcome.store');
 });
 
 Auth::routes();
@@ -30,6 +31,9 @@ Route::middleware(['web'])->group(static function () {
                 Route::get('/home', 'HomeController@index')->name('home');
                 // enter your route here to use with permissions
                 Route::namespace('Module')->group(static function(){
+                    Route::prefix('attendances')->group(static function(){
+                        Route::get('/', 'AttendancesController@index')->name('attendances');
+                    });
                     Route::prefix('people')->group(static function(){
                         Route::get('/', 'PeopleController@index')->name('people');
                         Route::post('/', 'PeopleController@store')->name('people.store');

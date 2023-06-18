@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Module;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\PeopleTraits;
 use App\Models\Departments;
 use App\Models\People;
 use App\Models\Units;
@@ -12,6 +13,8 @@ use App\Models\Levels;
 
 class PeopleController extends Controller
 {
+    use PeopleTraits;
+
     protected $btnEdit, $btnDelete, $btnDetails, $title;
 
     /**
@@ -273,22 +276,5 @@ class PeopleController extends Controller
             $this->title.' deleted successfully',
         )->success();
         return redirect()->route('units');
-    }
-
-    function getDepartment($department_id)
-    {
-        $result = Departments::where('id',$department_id)->first();
-        return $result;
-    }
-
-    function getUnit($unit_id)
-    {
-        $result = Units::where('id',$unit_id)->first();
-        return $result;
-    }
-
-    function peopleNo($initial, $department_id, $unit_id )
-    {
-        return Helper::generataPeopleNo($initial, !is_null($this->getDepartment($department_id)) ? $this->getDepartment($department_id)->tag : '', !is_null($this->getUnit($unit_id)) ? $this->getUnit($unit_id)->tag : '');
     }
 }
