@@ -79,6 +79,10 @@ Route::middleware(['web'])->group(static function () {
                         Route::get('/{id}/show', 'AppSettingController@show')->name('app_setting.show');
                         Route::get('/{id}/delete', 'AppSettingController@destroy')->name('app_setting.delete');
                     });
+                    Route::prefix('reports')->group(static function(){
+                        Route::get('/', 'ReportsController@index')->name('reports');
+                        Route::post('/export', 'ReportsController@export')->name('reports.export');
+                    });
                 });
             });
         });

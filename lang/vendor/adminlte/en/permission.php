@@ -7,4 +7,6 @@ return [
     'levels'                        => 'Levels',
     'attendances'                   => 'Attendances',
     'app_setting'                   => 'App Setting',
+    'reports'                       => 'Reports',
+    'export'                        => 'Export',
 ];

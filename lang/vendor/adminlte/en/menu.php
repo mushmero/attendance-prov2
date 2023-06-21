@@ -23,4 +23,5 @@ return [
     'attendances'                   => 'Attendances',
     'config'                        => 'Config',
     'app_setting'                   => 'App Setting',
+    'reports'                       => 'Reports',
 ];

@@ -7,6 +7,8 @@ $(document).ready(function() {
             if(data == 1){
                 disabledLink();
                 hideMenu();
+                defaultDateRangeFilter();
+                exportData();
             }
         }
     });
@@ -48,4 +50,58 @@ function hideMenu(){
 function refreshTime() {
     var formattedString = new moment().local('Asia/Kuala_Lumpur').format('DD/MM/YYYY hh:mm:ss A');
     $('#time').text(formattedString);
+}
+
+function defaultDateRangeFilter(){
+    var filter = $('#filter').val();
+    $('.date').datepicker({
+        format : 'yyyy-mm-dd',
+        maxDate : '+0d',
+        endDate : '+0d',
+        autoclose: true,
+        toggleActive: true,
+        orientation: 'bottom',
+    });
+
+    $('#filter').on('change', function(){
+        $('#fromDate').val('');
+        $('#toDate').val('');
+        $('#attendanceForm').submit();
+    });
+
+    if(filter != 'Custom'){
+        $('.customDate').hide();
+        $('#fromDate').val('');
+        $('#toDate').val('');
+    }else{
+        $('.customDate').show();
+        $('.filterdate').on('change', function(){
+            if($('#fromDate').val() != '' && $('#toDate').val() != ''){
+                $('#attendanceForm').submit();
+            }
+        });
+    }
+}
+
+function exportData(){
+    $('#reportExport').on('click', function(){    
+        var filter = $('#filter').val();
+        var dateFrom = $('#fromDate').val();
+        var dateTo = $('#toDate').val();
+
+        var formData = new FormData();
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formData.append('filter', filter);
+        formData.append('fromDate', dateFrom);
+        formData.append('toDate', dateTo);
+
+        $.ajax({
+            url : 'reports/export',
+            method : 'POST',
+            data : formData,
+            processData: false,
+            contentType : false,
+        });
+
+    });
 }

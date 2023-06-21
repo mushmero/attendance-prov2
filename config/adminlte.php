@@ -316,6 +316,11 @@ return [
             'url'   =>  'people',
             'icon'  =>  'fas fa-fw fa-user-alt',
         ],
+        [
+            'text'  =>  'reports',
+            'url'   =>  'reports',
+            'icon'  =>  'fas fa-fw fa-file',
+        ],
         ['config'   =>  'config'],
         [
             'text'  =>  'config',
@@ -596,6 +601,21 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css',
+                ],
+            ],
+        ],
+        'BsDatepicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.standalone.min.css',
                 ],
             ],
         ],
