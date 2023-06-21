@@ -11,6 +11,9 @@
     <div class="row">
         <div class="col-12">
             <x-adminlte-card title="{{ $table_title }}" theme="default" icon="fas fa-sm fa-file" collapsible>
+                <x-slot name="toolsSlot">
+                    <x-adminlte-button id="reportExport" class="btn-sm btn-flat {{ !Mushmero\Lapdash\Helpers\Helper::urlHasPermission('reports')  ? 'hide' : ''}}" label="{{ __('adminlte::adminlte.export') }}" theme="primary" icon="fas fa-print"/>
+                </x-slot>
                 <form method="get" id="attendanceForm">
                     <div class="row">
                         <div class="col-3"></div>
@@ -60,7 +63,6 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <button id="reportExport" class="btn btn-block bg-primary col-6 {{ !Mushmero\Lapdash\Helpers\Helper::urlHasPermission('reports')  ? 'hide' : ''}}" style="float:right;"><i class="fas fa-fw fa-print"></i> {{ __('adminlte::adminlte.export')}}</<button>
                         </div>
                     </div>
                 </form>

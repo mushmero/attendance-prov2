@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Module;
 
+use App\Exports\GeneralExportArray;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use Carbon\Carbon;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 class ReportsController extends Controller
 {
 
-    protected $title;
+    protected $title, $headers, $exportFormat, $writerType;
 
     /**
      * Declare default template for button edit, button delete & button view
@@ -20,6 +21,15 @@ class ReportsController extends Controller
     {
         $this->middleware('autologout');
         $this->title = 'Reports';
+        $this->headers = [
+            'Date',
+            'Staff No',
+            'Clock In',
+            'Clock Out',
+            'Status',
+        ];
+        $this->exportFormat = 'xlsx';
+        $this->writerType = \Maatwebsite\Excel\Excel::XLSX;
     }
     /**
      * Display a listing of the resource.
@@ -33,13 +43,7 @@ class ReportsController extends Controller
 
         $array = $this->processData($filter, $dateFrom, $dateTo);
 
-        $heads = [
-            'Date',
-            'Staff No',
-            'Clock In',
-            'Clock Out',
-            'Status',
-        ];
+        $heads = $this->headers;
 
         foreach($array as $arr){
             $data[] = array(
@@ -104,7 +108,34 @@ class ReportsController extends Controller
         $dateFrom = $request->get('fromDate');
         $dateTo = $request->get('toDate');
 
-        $array = $this->processData($filter, $dateFrom, $dateTo);
-        dd($array);
+        $result = $this->processData($filter, $dateFrom, $dateTo);
+
+        if($result->count() > 0){
+            $header = $this->headers;
+    
+            $data = [];
+    
+            foreach($result as $arr){
+                $data[] = array(
+                    Carbon::parse($arr->created_at)->format('d/m/Y'),
+                    $arr->people_no,
+                    $arr->clock_in ? Carbon::parse($arr->clock_in)->format('d/m/Y h:i:s A') : '',
+                    $arr->clock_out ? Carbon::parse($arr->clock_out)->format('d/m/Y h:i:s A') : '',
+                    $arr->status,
+                );
+            }
+    
+            if($filter == 'Custom'){
+                $appendFilename = $filter.'_'.$dateFrom.'-'.$dateTo;
+            }else{
+                $appendFilename = $filter;
+            }
+    
+            $filename = 'Attendance_'.$this->title.'_'.$appendFilename.'_'.Carbon::now()->format('Ymd').'_'.Carbon::now()->format('his').'.'.$this->exportFormat;
+    
+            return new GeneralExportArray($header, $data, $filename, $this->writerType);
+        }else{
+            return response()->json(['status' => false, 'message' => 'No content found. Unable to export']);
+        }
     }
 }

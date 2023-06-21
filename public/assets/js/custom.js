@@ -101,6 +101,32 @@ function exportData(){
             data : formData,
             processData: false,
             contentType : false,
+            cache: false,
+            xhrFields:{
+                responseType: 'blob'
+            },
+            success: function(result, status, xhr){
+                var disposition = xhr.getResponseHeader('content-disposition');
+                var matches = /filename=([^"]*)/.exec(disposition);
+                var filename = (matches != null && matches[1] ? matches[1] : 'Report Attendance.xlsx');
+        
+                // The actual download
+                var blob = new Blob([result], {
+                    type: 'application/vnd.ms-excel'
+                });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;        
+                document.body.appendChild(link);        
+                link.click();
+                document.body.removeChild(link);
+            },
+            error : function(xhr){
+                var contentType = xhr.getResponseHeader('content-type');
+                if(contentType == 'application/json'){
+                    Swal.fire('Error', 'No content found. Unable to export', 'error');
+                }
+            }
         });
 
     });
