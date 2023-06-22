@@ -54,32 +54,35 @@ function refreshTime() {
 
 function defaultDateRangeFilter(){
     var filter = $('#filter').val();
-    $('.date').datepicker({
-        format : 'yyyy-mm-dd',
-        maxDate : '+0d',
-        endDate : '+0d',
-        autoclose: true,
-        toggleActive: true,
-        orientation: 'bottom',
-    });
-
-    $('#filter').on('change', function(){
-        $('#fromDate').val('');
-        $('#toDate').val('');
-        $('#attendanceForm').submit();
-    });
-
-    if(filter != 'Custom'){
-        $('.customDate').hide();
-        $('#fromDate').val('');
-        $('#toDate').val('');
-    }else{
-        $('.customDate').show();
-        $('.filterdate').on('change', function(){
-            if($('#fromDate').val() != '' && $('#toDate').val() != ''){
-                $('#attendanceForm').submit();
-            }
+    if($('.date').length > 0){
+        $('.date').datepicker({
+            format : 'yyyy-mm-dd',
+            maxDate : '+0d',
+            endDate : '+0d',
+            autoclose: true,
+            toggleActive: true,
+            orientation: 'bottom',
         });
+    
+        $('#filter').on('change', function(){
+            $('#fromDate').val('');
+            $('#toDate').val('');
+            $('#attendanceForm').submit();
+        });
+    
+        if(filter != 'Custom'){
+            $('.customDate').hide();
+            $('#fromDate').val('');
+            $('#toDate').val('');
+        }else{
+            $('.customDate').show();
+            $('.filterdate').on('change', function(){
+                if($('#fromDate').val() != '' && $('#toDate').val() != ''){
+                    $('#attendanceForm').submit();
+                }
+            });
+        }
+
     }
 }
 
