@@ -73,4 +73,9 @@ class People extends Model
     {
         return $this->hasOne(Units::class,'id','unit_id');
     }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'people_no','people_no');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Traits\PeopleTraits;
 use App\Models\Departments;
 use App\Models\People;
 use App\Models\Units;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Levels;
 
@@ -168,10 +169,19 @@ class PeopleController extends Controller
     {
         $data = People::where('id', $id)->firstOrFail();
 
+        $performance = [
+            'total_normal' => $data->attendance->where('status', 'Normal')->count(),
+            'total_late' => $data->attendance->where('status', 'Late')->count(),
+            'month_normal' => $data->attendance()->where('status','Normal')->whereMonth('created_at', Carbon::today()->format('m'))->get()->count(),
+            'month_late' => $data->attendance()->where('status','Late')->whereMonth('created_at', Carbon::today()->format('m'))->get()->count(),
+        ];
+
         return view('modules.people.show', [
             'data' => $data,
             'title' => $this->title,
             'table_title' => 'Detail '.$this->title,
+            'table_kpi_title' => 'Performance Index',
+            'performance' => $performance,
         ]);
     }
 
