@@ -106,4 +106,29 @@ class Helper {
         }
         return $people_no;
     }
+
+    public static function countVal($array = [])
+    {
+        $a = $b = [];
+        if(count($array) > 0){
+            foreach($array as $arr){
+                foreach($arr as $k=> $v){
+                    $b[$k] = $v ? count($v) : 0;
+                }
+                array_push($a, $b);
+            }
+        }else{
+            $a = [0];
+        }
+        return $a;
+    }
+
+    public static function convertToLabel($array = [])
+    {
+        $a = [];
+        foreach($array as $key => $value){
+            array_push($a, $key);
+        }
+        return $a;
+    }
 }
