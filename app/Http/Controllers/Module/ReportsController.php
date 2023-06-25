@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Module;
 
 use App\Exports\GeneralExportArray;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\AttendanceTraits;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use DB;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
+    use AttendanceTraits;
 
     protected $title, $headers, $exportFormat, $writerType;
 
@@ -87,15 +89,17 @@ class ReportsController extends Controller
     {
         $array = [];
 
+        $all = $this->getAttendance();
+
         if(!empty($dateFrom) && !empty($dateTo)){
             if($filter == 'Custom'){
-                $array = Attendance::whereBetween(DB::raw('DATE(created_at)'), [Carbon::parse($dateFrom)->toDateString(), Carbon::parse($dateTo)->toDateString()])->get();
+                $array = $all->whereBetween('created_at', [Carbon::parse($dateFrom.' 00:00:00')->toDateTimeString(), Carbon::parse($dateTo.' 23:59:59')->toDateTimeString()]);
             }
         }else{
             if($filter == 'All'){
-                $array = Attendance::all()->sortByDesc('created_at');
+                $array = $all->sortByDesc('created_at');
             }else if($filter == 'Today'){
-                $array = Attendance::whereDate('created_at',Carbon::today()->toDateString())->orderBy('created_at')->get();
+                $array = $all->whereDate('created_at',Carbon::today()->toDateString())->orderBy('created_at');
             }
         }
 
