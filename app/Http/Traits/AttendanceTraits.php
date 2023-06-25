@@ -2,7 +2,6 @@
 
 namespace App\Http\Traits;
 use App\Models\Attendance;
-use Carbon\Carbon;
 
 trait AttendanceTraits
 {
@@ -28,5 +27,14 @@ trait AttendanceTraits
             }
         }
 
+    }
+
+    public function getAttendance($condition = [])
+    {
+        if(!empty($condition)){
+            return Attendance::where($condition);
+        }else{
+            return Attendance::all();
+        }
     }
 }
