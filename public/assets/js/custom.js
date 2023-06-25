@@ -9,6 +9,8 @@ $(document).ready(function() {
                 hideMenu();
                 defaultDateRangeFilter();
                 exportData();
+                attendanceCount();
+                lineChartData();
             }
         }
     });
@@ -133,4 +135,185 @@ function exportData(){
         });
 
     });
+}
+
+function attendanceCount(){
+    var options = ['Today','Weekly','Monthly','Yearly'];
+    options.forEach(option => {
+        var formdata = new FormData();
+        formdata.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formdata.append('option', option);
+    
+        $.ajax({
+            url: 'home/data',
+            method: 'POST',
+            data: formdata,
+            processData: false,
+            contentType : false,
+            success: function(resp){
+                if(resp){
+                    generateNormalCounter(resp.result.normal, option);
+                    generateLateCounter(resp.result.late, option);
+                }
+            }
+        });
+    });
+}
+
+function generateNormalCounter(total, option){
+    const updateCount = () => {
+        const speed = 200;
+        const target = parseInt(total);
+        const count = parseInt($('#'+option.toLowerCase()+'-normal').text());
+        const increment = target / speed;
+    
+        if (count <= target) {
+            $('#'+option.toLowerCase()+'-normal').text(Math.ceil(count+increment));
+            setTimeout(updateCount, 1);
+        } else {
+            $('#'+option.toLowerCase()+'-normal').text(formatNumber(target,','));
+        }
+    }
+    updateCount();
+}
+
+function generateLateCounter(total, option){
+    const updateCount = () => {
+        const speed = 200;
+        const target = parseInt(total);
+        const count = parseInt($('#'+option.toLowerCase()+'-late').text());
+        const increment = target / speed;
+    
+        if (count <= target) {
+            $('#'+option.toLowerCase()+'-late').text(Math.ceil(count+increment));
+            setTimeout(updateCount, 1);
+        } else {
+            $('#'+option.toLowerCase()+'-late').text(formatNumber(target,','));
+        }
+    }
+    updateCount();
+}
+
+function formatNumber(x, seperator) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, seperator);
+}
+
+function lineChartData(){
+    var filter = $('#filter').val();
+    
+    if($('.date').length > 0){
+        $('.date').datepicker({
+            format : 'yyyy-mm-dd',
+            maxDate : '+0d',
+            endDate : '+0d',
+            autoclose: true,
+            toggleActive: true,
+            orientation: 'bottom',
+        });
+    
+        var formData = new FormData();
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formData.append('filter', filter);
+    
+        $('#filter').on('change', function(e){
+            if($(e.currentTarget).val() != 'Custom'){
+                $('.customDate').hide();
+                $('#fromDate').val('');
+                $('#toDate').val('');    
+                var formData = new FormData();
+                formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                formData.append('filter', $(e.currentTarget).val());
+                processAjax(formData);
+            }else if($(e.currentTarget).val() == 'Custom'){
+                $('.customDate').show();
+            }
+        });
+
+        if(filter == 'Custom'){
+            $('.customDate').show();
+            if($('#fromDate').val() != '' && $('#toDate').val() != ''){    
+                var formData = new FormData();
+                formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                formData.append('filter', filter);
+                formData.append('fromDate', $('#fromDate').val());
+                formData.append('toDate', $('#toDate').val());
+            }
+        }
+        processAjax(formData);
+    }
+}
+
+function processAjax(formData){
+    $.ajax({
+        url : 'home/chartdata',
+        method : 'POST',
+        data : formData,
+        processData: false,
+        contentType : false,
+        success: function(resp){
+            if(resp.status){
+                generateLineChart(resp);
+            }
+        },
+    });
+}
+
+var chart = null;
+function generateLineChart(resp){
+    const labels = resp.result.label;
+    const dataset = resp.result.data;
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Normal',
+                data: dataset.map(row => row.Normal),
+                fill: false,
+                borderColor: 'rgb(40,167,69)',
+                backgroundColor: 'rgb(40,167,69)',
+                tension: 0.4
+            },
+            {
+                label: 'Late',
+                data: dataset.map(row => row.Late),
+                fill: false,
+                borderColor: 'rgb(220,53,69)',
+                backgroundColor: 'rgb(220,53,69)',
+                tension: 0.4
+            },
+        ]
+    };
+    const options = {
+        maintainAspectRatio: false,        
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    precision: 0,
+                },
+            },
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
+        plugins: {
+            tooltip: {
+                enabled: true,
+                position: 'nearest',
+            },
+        },
+    };
+    const config = {
+        type: 'line',
+        data: data,
+        options: options,
+    };
+
+    var canvas = $('#statistic');
+    if(chart){
+        chart.clear();
+        chart.destroy();
+    }
+    chart = new Chart(canvas, config);
 }

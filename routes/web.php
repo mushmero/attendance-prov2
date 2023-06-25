@@ -87,5 +87,11 @@ Route::middleware(['web'])->group(static function () {
             });
         });
         // enter route here to use without permissions
+        Route::namespace('App\Http\Controllers')->group(static function () {
+            Route::prefix('home')->group(static function(){
+                Route::post('/data', 'HomeController@getData')->name('home.data');
+                Route::post('/chartdata', 'HomeController@getChartData')->name('home.chartdata');
+            });
+        });
     });
 });
