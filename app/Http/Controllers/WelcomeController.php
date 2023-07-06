@@ -92,7 +92,12 @@ class WelcomeController extends Controller
                     }  
                 }
             }else if(!empty($clock_out) && $clock_out == 'out'){
-                if($this->attendanceExist($people_no, Carbon::today()->toDateString(), 'clock_out')){ 
+                $clock_out_exist = $this->attendanceExist($people_no, Carbon::today()->toDateString(), 'clock_out');
+                if(is_null($clock_out_exist)){
+                    flash(
+                        'You are not clock in',
+                    )->error();
+                }elseif($clock_out_exist){ 
                     flash(
                         'You already clocked out',
                     )->warning();

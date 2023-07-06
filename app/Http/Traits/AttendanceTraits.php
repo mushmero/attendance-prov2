@@ -19,11 +19,16 @@ trait AttendanceTraits
                 return false;
             }
         }else if($method == 'clock_out'){
-            $clocked_out = Attendance::where('people_no', $people_no)->whereDate('clock_out', $date)->first();
-            if($clocked_out){
-                return true;
+            $is_clocked_in = Attendance::where('people_no', $people_no)->whereDate('clock_in', $date)->first();
+            if($is_clocked_in){
+                $clocked_out = Attendance::where('people_no', $people_no)->whereDate('clock_in', $date)->whereDate('clock_out', $date)->first();
+                if($clocked_out){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
-                return false;
+                return null;
             }
         }
 
