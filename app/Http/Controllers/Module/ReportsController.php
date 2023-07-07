@@ -46,9 +46,13 @@ class ReportsController extends Controller
         $array = $this->processData($filter, $dateFrom, $dateTo);
 
         $heads = $this->headers;
+        array_unshift($heads, '#');
+        $count = 0;
 
         foreach($array as $arr){
+            $count++;
             $data[] = array(
+                $count,
                 Carbon::parse($arr->created_at)->format('d/m/Y'),
                 $arr->people_no,
                 $arr->clock_in ? Carbon::parse($arr->clock_in)->format('d/m/Y h:i:s A') : '',
@@ -59,8 +63,8 @@ class ReportsController extends Controller
 
         $config = [
             'data' => $data,
-            'order' => [[0, 'desc']],
-            'columns' => [null, null, null, null, null],
+            'order' => [[0, 'asc']],
+            'columns' => [null, null, null, null, null, null],
         ];
 
         $range = [
@@ -99,7 +103,9 @@ class ReportsController extends Controller
             if($filter == 'All'){
                 $array = $all->sortByDesc('created_at');
             }else if($filter == 'Today'){
-                $array = $all->whereDate('created_at',Carbon::today()->toDateString())->orderBy('created_at');
+                $array = $all->filter(function($row){
+                    return strstr(Carbon::parse($row->created_at)->toDateString(), Carbon::today()->toDateString());
+                })->sortByDesc('created_at');
             }
         }
 
