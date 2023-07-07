@@ -66,7 +66,7 @@ class WelcomeController extends Controller
                 }else{
                     $now = Carbon::now(config('app.timezone'));
                     $clocked_in_time = $now->toTimeString();
-                    $time_limit = $this->getValueByParameter('clock_in_time_limit')->value;
+                    $time_limit = $this->getValueByParameter('clock_in_time_limit')->value != '' ? $this->getValueByParameter('clock_in_time_limit')->value : env('CLOCK_IN_TIME_LIMIT');
                     if($time_limit){
                         if($clocked_in_time < Carbon::parse($time_limit)->format('h:i:s')){
                             $create = [
